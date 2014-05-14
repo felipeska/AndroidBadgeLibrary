@@ -24,6 +24,11 @@ local.properties
 # IntelliJ files
 .idea
 *.iml
+build/
+.gradle/
+gradle/*
+*.bat
+gradlew
 
 # OSX files
 .DS_Store

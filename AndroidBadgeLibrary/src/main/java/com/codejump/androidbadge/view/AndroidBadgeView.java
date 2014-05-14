@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -507,6 +509,11 @@ public class AndroidBadgeView extends View {
 		badgeBackground = background;
 	}
 
+	public void setDrawableBackground(Drawable background) {
+		badgeBackground = pictureDrawableToBitmap((PictureDrawable) background);
+
+	}
+
 	public Bitmap getBitmapBackground() {
 		return badgeBackground;
 	}
@@ -516,5 +523,13 @@ public class AndroidBadgeView extends View {
 		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip,
 				r.getDisplayMetrics());
 		return (int) px;
+	}
+
+	private Bitmap pictureDrawableToBitmap(PictureDrawable pictureDrawable) {
+		Bitmap bmp = Bitmap.createBitmap(pictureDrawable.getIntrinsicWidth(),
+				pictureDrawable.getIntrinsicHeight(), Config.ARGB_8888);
+		Canvas canvas = new Canvas(bmp);
+		canvas.drawPicture(pictureDrawable.getPicture());
+		return bmp;
 	}
 }
